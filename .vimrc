@@ -17,7 +17,7 @@ NeoBundle 'thinca/vim-quickrun'
 "NeoBundle 'jonathanfilip/vim-lucius'
 "NeoBundle 'tomasr/molokai'
 NeoBundle 'w0ng/vim-hybrid'
-"NeoBundle 'alpaca-tc/alpaca_powertabline'
+NeoBundle 'alpaca-tc/alpaca_powertabline'
 "NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'bling/vim-airline'
 NeoBundle 'Shougo/unite.vim'
@@ -91,14 +91,6 @@ set tabstop=4
 " () highlight
 set showmatch
 
-" 閉じ括弧で中に移動
-inoremap {} {}<Left>
-inoremap [] []<Left>
-inoremap () ()<Left>
-inoremap "" ""<Left>
-inoremap '' ''<Left>
-inoremap <> <><Left>
-
 " 色数
 set t_Co=256
 
@@ -155,6 +147,7 @@ function! s:my_tabline()
     return s
 endfunction
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+
 set showtabline=2 " 常にタブラインを表示
 
 " The prefix key.
@@ -170,7 +163,6 @@ map <silent> [Tag]o :tablast <bar> tabnew<CR>
 map <silent> [Tag]d :tabclose<CR>
 map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
-
 "}}}
 
 " Plugin Settings {{{
@@ -203,4 +195,10 @@ if executable("clang++")
 endif
 " error箇所の文字
 let g:syntastic_error_symbol='⚠'
+
+" Alpaca_Powertabline
+let g:alpaca_powertabline_enable = 1
+let g:alpaca_powertabline_sep1 = "⮀"
+let g:alpaca_powertabline_sep2 = "⮁"
+let g:alpaca_powertabline_default_place = 1
 "}}}
