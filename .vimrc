@@ -78,7 +78,7 @@ set number
 " 80列目に線入れる
 set colorcolumn=80
 
-" マーカー埋め込みによる折り畳み機能 [zf] [zd]
+" マーカー埋め込みによる折り畳み機能
 set foldmethod=marker
 
 " インデント類の設定
@@ -122,11 +122,11 @@ if !has('win32')
     noremap ; :
 endif
 
-" タブ設定
 " Anywhere SID.
 function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
+
 " Set tabline.
 function! s:my_tabline()
     let s = ''
@@ -148,6 +148,7 @@ function! s:my_tabline()
 endfunction
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 
+" タブ設定
 set showtabline=2 " 常にタブラインを表示
 
 " The prefix key.
@@ -155,7 +156,7 @@ nnoremap    [Tag]   <Nop>
 nmap    t   [Tag]
 " Tab jump
 " t1で一番左のTab, ...
-for n in range(1, 9)
+for n in range(1, tabpagenr('$') - 1)
     execute 'nnoremap <silent> [Tag]'.n ':<C-u>tabnext'.n.'<CR>'
 endfor
 " Key mapping
@@ -182,12 +183,15 @@ if executable("clang++")
     let g:quickrun_config = {}
     let g:quickrun_config['cpp/clang++11'] = {
                 \ 'cmdopt': '--std=c++11 --stdlib=libc++',
-                \ 'type': 'cpp/clang++'
+                \ 'type': 'cpp/clang++',
+                \ 'hook/time/enable': '1'
                 \ }
     let g:quickrun_config['cpp'] = {'type': 'cpp/clang++11'}
 endif
 
 " Syntastic
+" エラー表示
+let g:syntastic_auto_loc_list = 1
 " clang用
 if executable("clang++")
     let g:syntastic_cpp_compiler = 'clang++'
