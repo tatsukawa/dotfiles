@@ -1,5 +1,4 @@
-" Vi互換モードをoff
-set nocompatible
+set nocompatible " Vi互換モードをoff
 
 " NeoBundle Settings {{{
 if has('vim_starting')
@@ -117,8 +116,8 @@ set encoding=utf-8
 " Vimを使ってくれてありがとう！！！！！！！！！！！！
 set notitle
 
-" ;でコマンド入力( ;と:を入れ替) (Mac or linux)
-if !has('win32')
+" ;でコマンド入力( ;と:を入れ替え US用)
+if has('mac')
     noremap ; :
 endif
 
@@ -203,6 +202,6 @@ let g:syntastic_error_symbol='⚠'
 " Alpaca_Powertabline
 let g:alpaca_powertabline_enable = 1
 let g:alpaca_powertabline_sep1 = "⮀"
-let g:alpaca_powertabline_sep2 = "⮁"
+let g:alpaca_powertabline_sep2 = "⮁⮁ "
 let g:alpaca_powertabline_default_place = 1
 "}}}
