@@ -1,207 +1,164 @@
-set nocompatible " Vi互換モードをoff
-
-" NeoBundle Settings {{{
-if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
+"{{{ dein Scripts
+if &compatible
+	set nocompatible               " Be iMproved
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+" Required:
+set runtimepath+=/home/tatsukawa/.vim/repos/github.com/Shougo/dein.vim
 
-NeoBundleFetch 'Shougo/neobundle.vim'
+" Required:
+call dein#begin('/home/tatsukawa/.vim')
 
-NeoBundle 'Shougo/vimproc'
+" Let dein manage dein
+" Required:
+call dein#add('Shougo/dein.vim')
 
-" My Bundles here:
-NeoBundle 'thinca/vim-quickrun'
-"NeoBundle 'jonathanfilip/vim-lucius'
-"NeoBundle 'tomasr/molokai'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'alpaca-tc/alpaca_powertabline'
-"NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
-NeoBundle 'bling/vim-airline'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'scrooloose/syntastic'
+" Add or remove your plugins here:
+call dein#add('Shougo/neosnippet.vim')
+call dein#add('Shougo/neosnippet-snippets')
+call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+call dein#add('Shougo/neocomplete.vim')
 
-filetype plugin indent on     " Required!
+call dein#add('gosukiwi/vim-atom-dark')
 
-" Installation check.
-NeoBundleCheck
+call dein#add('itchyny/lightline.vim')
+
+call dein#add('scrooloose/syntastic')
+call dein#add('scrooloose/nerdtree')
+
+call dein#add('tpope/vim-fugitive')
+" Required:
+call dein#end()
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
 "}}}
 
-" Standard Settings {{{
-" コマンドライン補完
-set wildmenu
+"{{{ Syntastica Settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-" タイプ途中のコマンドを画面下に表示
-set showcmd
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+"}}}
 
-" 検索語を強調表示
-set hlsearch
+" {{{ neocomplate settings
+" disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-" スワップファイル、バックアップファイルを取らない
-set nowritebackup
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+    " For no inserting <CR> key.
+    "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+" }}}
+
+" {{{ Color Settings
+set t_Co=256
+colorscheme atom-dark-256
+" }}}
+
+" {{{ General Settings
+set fenc=utf-8
 set nobackup
 set noswapfile
+set autoread
+set hidden
+set showcmd
 
-" 不可視文字の可視化
-set list
-
-" Unicodeで更かし文字を綺麗に表示
-set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
-
-" 自動的に改行が入るのを無効化
-set textwidth=0
-
-" クリップボードの設定
-set clipboard+=unnamed
-set clipboard+=autoselect
-
-" 自動インデント
-set autoindent
-
-" カーソルが何行目の何列目に置かれているかを表示
-set ruler
-
-" 常にステータス行を表示
-set laststatus=2
-
-" {command} を実行する際、確認が必要ならばダイアログを表示
-set confirm
-
-" 削除
-set backspace=indent,eol,start
-
-" 行番号
 set number
+set cursorline
+"set cursorcolumn
+set virtualedit=onemore
+set showmatch
+set laststatus=2
+set wildmode=list:longest
 
-" 80列目に線入れる
-set colorcolumn=80
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set softtabstop=4
 
-" マーカー埋め込みによる折り畳み機能
+set ignorecase
+set incsearch
+set wrapscan
+set hlsearch
 set foldmethod=marker
 
-" インデント類の設定
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-set shiftwidth=4
-set tabstop=4
-
-" () highlight
-set showmatch
-
-" 色数
-set t_Co=256
-
-" カラースキーマ
-colorscheme hybrid
-
-" カーソル行をハイライト
-set cursorline
-
-" カレントウィンドウにのみ罫線を引く
-augroup cch
-    autocmd! cch
-    autocmd WinLeave * set nocursorline
-    autocmd WinEnter,BufRead * set cursorline
-augroup END
-
-hi clear CursorLine
-hi CursorLine gui=underline
-highlight CursorLine ctermbg=black guibg=black
-
-" 文字エンコーディング
-set encoding=utf-8
-
-" Vimを使ってくれてありがとう！！！！！！！！！！！！
-set notitle
-
-" ;でコマンド入力( ;と:を入れ替え US用)
-if has('mac')
-    noremap ; :
-endif
-
-" Anywhere SID.
-function! s:SID_PREFIX()
-    return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
-endfunction
-
-" Set tabline.
-function! s:my_tabline()
-    let s = ''
-    for i in range(1, tabpagenr('$'))
-        let bufnrs = tabpagebuflist(i)
-        let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
-        let no = i  " display 0-origin tabpagenr.
-        let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
-        let title = fnamemodify(bufname(bufnr), ':t')
-        let title = '[' . title . ']'
-        let s .= '%'.i.'T'
-        let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
-        let s .= no . ':' . title
-        let s .= mod
-        let s .= '%#TabLineFill# '
-    endfor
-    let s .= '%#TabLineFill#%T%=%#TabLine#'
-    return s
-endfunction
-let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
-
-" タブ設定
-set showtabline=2 " 常にタブラインを表示
-
-" The prefix key.
-nnoremap    [Tag]   <Nop>
-nmap    t   [Tag]
-" Tab jump
-" t1で一番左のTab, ...
-for n in range(1, tabpagenr('$') - 1)
-    execute 'nnoremap <silent> [Tag]'.n ':<C-u>tabnext'.n.'<CR>'
-endfor
-" Key mapping
-map <silent> [Tag]o :tablast <bar> tabnew<CR>
-map <silent> [Tag]d :tabclose<CR>
-map <silent> [Tag]n :tabnext<CR>
-map <silent> [Tag]p :tabprevious<CR>
-"}}}
-
-" Plugin Settings {{{
-" Airline 
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline#extensions#branch#symbol = '⭠'
-let g:airline#extensions#readonly#symbol = '⭤'
-let g:airline_linecolumn_prefix = '⭡'
-
-" Quickrun 
-" clang のコマンドラインオプションを追加する
-if executable("clang++")
-    let g:quickrun_config = {}
-    let g:quickrun_config['cpp/clang++11'] = {
-                \ 'cmdopt': '--std=c++11 --stdlib=libc++',
-                \ 'type': 'cpp/clang++',
-                \ 'hook/time/enable': '1'
-                \ }
-    let g:quickrun_config['cpp'] = {'type': 'cpp/clang++11'}
-endif
-
-" Syntastic
-" エラー表示
-let g:syntastic_auto_loc_list = 1
-" clang用
-if executable("clang++")
-    let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = '--std=c++11 --stdlib=libc++'
-endif
-" error箇所の文字
-let g:syntastic_error_symbol='⚠'
-
-" Alpaca_Powertabline
-let g:alpaca_powertabline_enable = 1
-let g:alpaca_powertabline_sep1 = "⮀"
-let g:alpaca_powertabline_sep2 = "⮁⮁ "
-let g:alpaca_powertabline_default_place = 1
-"}}}
+set clipboard^=unnamedplus,autoselect
+set paste
+set autoindent
+set smartindent
+set cindent
+" }}}
