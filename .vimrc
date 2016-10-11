@@ -21,6 +21,8 @@ call dein#add('Shougo/neocomplete.vim')
 
 call dein#add('gosukiwi/vim-atom-dark')
 
+call dein#add('justmao945/vim-clang')
+
 call dein#add('itchyny/lightline.vim')
 
 call dein#add('scrooloose/syntastic')
@@ -50,6 +52,40 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 "}}}
+
+" {{{ vim-clang Settings
+let g:clang_auto = 0
+let g:clang_include_sysheaders = 1
+let g:clang_check_syntax_auto = 1
+let g:clang_include_sysheaders_from_gcc = 1
+let g:clang_dotfile = '~/.vim/.clang'
+let g:clang_c_options = ''
+"let g:clang_cpp_options = '-std=c++1z -stdlib=libc++ --pedantic-errors'
+let g:clang_cpp_options = '-std=c++1y -stdlib=libc++ --pedantic'
+let g:clang_c_completeopt   = 'menuone'
+let g:clang_cpp_completeopt = 'menuone'
+let g:clang_include_sysheaders_from_gcc = 1
+
+if executable('clang-3.6')
+    let g:clang_exec = 'clang-3.6'
+elseif executable('clang-3.5')
+    let g:clang_exec = 'clang-3.5'
+elseif executable('clang-3.4')
+    let g:clang_exec = 'clang-3.4'
+else
+    let g:clang_exec = 'clang'
+endif
+
+if executable('clang-format-3.6')
+    let g:clang_format_exec = 'clang-format-3.6'
+elseif executable('clang-format-3.5')
+    let g:clang_format_exec = 'clang-format-3.5'
+elseif executable('clang-format-3.4')
+    let g:clang_format_exec = 'clang-format-3.4'
+else
+    let g:clang_exec = 'clang-format'
+endif
+" }}}
 
 " {{{ neocomplate settings
 " disable AutoComplPop.
@@ -115,9 +151,9 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 if !exists('g:neocomplete#sources#omni#input_patterns')
     let g:neocomplete#sources#omni#input_patterns = {}
 endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
