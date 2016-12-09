@@ -18,6 +18,7 @@ call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
 call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
 call dein#add('Shougo/neocomplete.vim')
+call dein#add('Shougo/unite.vim')
 
 call dein#add('gosukiwi/vim-atom-dark')
 
@@ -197,4 +198,6 @@ set paste
 set autoindent
 set smartindent
 set cindent
+
+set notitle
 " }}}
