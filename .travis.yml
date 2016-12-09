@@ -2,14 +2,7 @@
 language: python
 python: "2.7"
 env:
-  - IMAGE=ubuntu TAG=xenial
   - IMAGE=ubuntu TAG=trusty
-  - IMAGE=ubuntu TAG=precise
-  - IMAGE=debian TAG=jessie
-  - IMAGE=debian TAG=wheezy
-  - IMAGE=centos TAG=7
-  - IMAGE=centos TAG=6
-  - IMAGE=fedora TAG=latest
 
 cache: pip
 
@@ -50,7 +43,7 @@ install:
   - ansible-lint --version
 
 script:
-  - test.sh
+  - sh test.sh
 
 notifications:
   email: false
