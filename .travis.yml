@@ -43,7 +43,10 @@ install:
   - ansible-lint --version
 
 script:
-  - sh test.sh
+  - ansible-playbook -i localhost, --syntax-check init.yml
+  - ansible-lint init.yml
+  - ansible-playbook -i test, -e distro=$IMAGE init.yml
+
 
 notifications:
   email: false
