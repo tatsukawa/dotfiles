@@ -1,3 +1,7 @@
+# My configuration files
+
+[![Build Status](https://travis-ci.org/tatsukawa/dotfiles.svg?branch=master)](https://travis-ci.org/tatsukawa/dotfiles)
+
 ## Ansible
 
 `init.yml` is incompletion.
