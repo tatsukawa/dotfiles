@@ -23,6 +23,14 @@ $ curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh
 $ sh ./installer.sh {specify the installation directory}
 ```
 
+## Emacs
+
++ https://github.com/cask/cask
+
+```
+$ curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+```
+
 ## Ruby
 
 + https://github.com/rbenv/rbenv
