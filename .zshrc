@@ -22,3 +22,5 @@ if ! zplug check --verbose; then
 fi
 
 zplug load --verbose
+
+source $HOME/.zlogin
