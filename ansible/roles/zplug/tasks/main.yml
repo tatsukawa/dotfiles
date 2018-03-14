@@ -1,0 +1,18 @@
+# roles/zplug/tasks/main.yml
+- name: install zsh and git
+  apt: 
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  with_items:
+    - git
+    - zsh
+  become: true
+
+- name: check if .zplug directory exist
+  stat:
+    path: ~/.zplug
+  register: dir
+- name: curl zplug repository and place
+  shell: curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
+  when: not dir.stat.exists

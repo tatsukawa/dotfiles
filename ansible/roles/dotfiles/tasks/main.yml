@@ -1,0 +1,26 @@
+# roles/dotfiles/tasks/main.yml
+- name: make tmporary directory
+  file:
+    path: tmp
+    state: directory
+
+- name: git clone tatsukawa/dotfiles
+  git:
+    repo: 'https://github.com/tatsukawa/dotfiles.git'
+    dest: tmp/
+    update: false
+
+- name: copy files
+  copy:
+    src: "tmp/{{ item }}"
+    dest: "~/{{ item }}"
+  with_items:
+      - .vimrc
+      - .zshrc
+      - .zlogin
+      - .gitconfig
+      - .latexmkrc
+      - .tmux.conf
+
+- name: remove used files
+  shell: rm -r tmp

@@ -1,0 +1,23 @@
+---
+- name: tatsukawa's environment
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Basic applications
+      apt:
+         name: "{{ item }}"
+         state: present
+         update_cache: true
+      with_items:
+        - git
+        - tmux
+        - chromium-browser
+      become: true
+
+  roles:
+        - { role: dein }
+        - { role: zplug }
+        - { role: dotfiles }
+        - { role: ubuntu_env }
+  

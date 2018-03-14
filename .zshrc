@@ -7,7 +7,6 @@ zplug "mollifier/cd-gitroot"
 zplug "junegunn/fzf-bin", as:command, from:gh-r, rename-to:fzf
 zplug "junegunn/fzf", as:command, use:bin/fzf-tmux
 zplug "mrowa44/emojify", as:command
-zplug "b4b4r07/emoji-cli", if:"which jq"
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "b4b4r07/zsh-gomi", as:command, use:bin
 zplug "themes/frisk", from:oh-my-zsh, as:theme
