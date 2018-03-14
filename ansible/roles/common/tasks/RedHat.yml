@@ -1,0 +1,13 @@
+- name: Basic applications
+  apt:
+     name: "{{ item }}"
+     state: present
+     update_cache: true
+  with_items:
+    - git
+    - tmux
+    - vim
+    - zsh
+    - chromium-browser
+  become: true
+

@@ -1,13 +1,6 @@
 # roles/dein/tasks/main.yml
+
 # https://github.com/Shougo/dein.vim
-
-- name: install vim
-  apt:
-    name: vim
-    state: present
-    update_cache: true
-  become: true
-
 - name: curl dein.vim
   shell: curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
 

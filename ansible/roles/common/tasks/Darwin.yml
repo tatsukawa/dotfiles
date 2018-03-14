@@ -1,0 +1,29 @@
+# /roles/common/tasks/Darwin.yml
+
+# https://brew.sh/index_ja
+- name: install homebrew
+  shell: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+- name: install common applications
+  homebrew:
+    name: "{{ item }}"
+    state: present
+    update_homebrew: true
+  with_items:
+    - git
+    - tmux
+    - vim
+    - zsh
+
+# https://caskroom.github.io/
+- name: brew tap cask
+  shell: brew tap caskroom/cask
+
+- name: check if google chrome exist
+  stat:
+    path: /Applications/Google Chrome.app
+  register: file
+
+- name: install google chrome
+  shell: brew cask install google-chrome
+  when: not file.stat.exists
