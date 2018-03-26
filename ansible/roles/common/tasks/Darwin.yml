@@ -89,3 +89,13 @@
   shell: brew cask install spectacle
   when: not file.stat.exists
 
+# iTerm2
+- name: check if iterm2 exist
+  stat:
+    path: /Applications/iTerm.app
+  register: file
+
+- name: install spectacle
+  shell: brew cask install iterm2
+  when: not file.stat.exists
+
