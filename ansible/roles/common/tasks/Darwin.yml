@@ -79,3 +79,13 @@
   shell: brew cask install adobe-acrobat-reader
   when: not file.stat.exists
 
+# Spectacle
+- name: check if spectacle exist
+  stat:
+    path: /Applications/Spectacle.app
+  register: file
+
+- name: install spectacle
+  shell: brew cask install spectacle
+  when: not file.stat.exists
+
