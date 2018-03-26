@@ -201,3 +201,7 @@ set cindent
 
 set notitle
 " }}}
+
+if has("mac")
+  set backspace=indent,eol,start
+endif

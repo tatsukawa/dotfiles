@@ -2,7 +2,9 @@
 
 ## Environment
 
-- OS: `Ubuntu 16.04`
+I confirmed to work well in below environments.
+- `Ubuntu 16.04` 
+- `macOS High Sierra`
 
 ## How to use
 

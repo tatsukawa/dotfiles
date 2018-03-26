@@ -19,6 +19,7 @@
 - name: brew tap cask
   shell: brew tap caskroom/cask
 
+# Google Chrome
 - name: check if google chrome exist
   stat:
     path: /Applications/Google Chrome.app
@@ -27,3 +28,54 @@
 - name: install google chrome
   shell: brew cask install google-chrome
   when: not file.stat.exists
+
+# Google Japanese IME
+- name: check if google japanese IME exist
+  stat:
+    path: /Applications/GoogleJapaneseInput.localized
+  register: file
+
+- name: install google chrome
+  shell: brew cask install google-japanese-ime
+  when: not file.stat.exists
+
+# Backup and sync
+- name: check if google backup and sync exist
+  stat:
+    path: /Applications/Backup and Sync.app
+  register: file
+
+- name: install google backup and sync
+  shell: brew cask install google-backup-and-sync
+  when: not file.stat.exists
+
+# Alfred
+- name: check if alfred exist
+  stat:
+    path: /Applications/Alfred 3.app
+  register: file
+
+- name: install alfred
+  shell: brew cask install alfred
+  when: not file.stat.exists
+
+# Visual Studio Code
+- name: check if visual studio code exist
+  stat:
+    path: /Applications/Visual Studio Code.app
+  register: file
+
+- name: install visual studio code
+  shell: brew cask install visual-studio-code
+  when: not file.stat.exists
+
+# Adobe Acrobat Reader
+- name: check if acrobat reader exist
+  stat:
+    path: /Applications/Adobe Acrobat Reader DC.app
+  register: file
+
+- name: install acrobat reader
+  shell: brew cask install adobe-acrobat-reader
+  when: not file.stat.exists
+
