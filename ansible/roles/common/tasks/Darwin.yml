@@ -14,6 +14,8 @@
     - tmux
     - vim
     - zsh
+    - pyenv
+    - rbenv
 
 # https://caskroom.github.io/
 - name: brew tap cask
@@ -99,3 +101,8 @@
   shell: brew cask install iterm2
   when: not file.stat.exists
 
+# mkdir ~/.zsh
+- name: ~/.zsh directory
+  file:
+      path: ~/.zsh
+      state: directory
