@@ -1,0 +1,20 @@
+{
+    "version": "2.0",
+    "url": "http://download.sysinternals.com/files/Ctrl2Cap.zip",
+    "##": "Replacing CapsLock to Ctrl",
+    "depends": [
+        "sudo"
+    ],
+    "installer": {
+        "script": [
+            "sudo $dir\\ctrl2cap.exe /install"
+        ]
+    },
+    "bin": "ctrl2cap.exe",
+    "shortcuts": [
+        [
+            "ctrl2cap.exe",
+            "ctrl2cap"
+        ]
+    ]
+}
