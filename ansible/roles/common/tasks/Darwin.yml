@@ -1,8 +1,14 @@
 # /roles/common/tasks/Darwin.yml
 
+- name: check if brew command exist
+  stat:
+    path: /opt/homebrew/bin/brew
+  register: file
+
 # https://brew.sh/index_ja
 - name: install homebrew
-  shell: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  when: not file.stat.exists
 
 - name: install common applications
   homebrew:
@@ -11,15 +17,23 @@
     update_homebrew: true
   with_items:
     - git
+    - gh
+    - htop
     - tmux
     - vim
     - zsh
-    - pyenv
-    - rbenv
+    - anyenv
 
-# https://caskroom.github.io/
-- name: brew tap cask
-  shell: brew tap caskroom/cask
+# Rosetta
+- name: check if Rosetta command exist
+  stat:
+    path: /System/Library/CoreServices/Rosetta 2 Updater.app
+  register: file
+
+- name: install rosetta
+  shell: softwareupdate --install-rosetta --agree-to-license
+  when: not file.stat.exists
+  become: true
 
 # Google Chrome
 - name: check if google chrome exist
@@ -28,7 +42,7 @@
   register: file
 
 - name: install google chrome
-  shell: brew cask install google-chrome
+  shell: brew install google-chrome --cask
   when: not file.stat.exists
 
 # Google Japanese IME
@@ -38,27 +52,27 @@
   register: file
 
 - name: install google chrome
-  shell: brew cask install google-japanese-ime
+  shell: brew install google-japanese-ime --cask
   when: not file.stat.exists
 
 # Backup and sync
-- name: check if google backup and sync exist
+- name: check if google drive exist
   stat:
-    path: /Applications/Backup and Sync.app
+    path: /Applications/Google Drive.app
   register: file
 
-- name: install google backup and sync
-  shell: brew cask install google-backup-and-sync
+- name: install google drive
+  shell: brew install google-drive --cask
   when: not file.stat.exists
 
 # Alfred
 - name: check if alfred exist
   stat:
-    path: /Applications/Alfred 3.app
+    path: /Applications/Alfred 4.app
   register: file
 
 - name: install alfred
-  shell: brew cask install alfred
+  shell: brew install alfred --cask
   when: not file.stat.exists
 
 # Visual Studio Code
@@ -68,7 +82,7 @@
   register: file
 
 - name: install visual studio code
-  shell: brew cask install visual-studio-code
+  shell: brew install visual-studio-code --cask
   when: not file.stat.exists
 
 # Adobe Acrobat Reader
@@ -78,7 +92,7 @@
   register: file
 
 - name: install acrobat reader
-  shell: brew cask install adobe-acrobat-reader
+  shell: brew install adobe-acrobat-reader --cask
   when: not file.stat.exists
 
 # Spectacle
@@ -88,7 +102,7 @@
   register: file
 
 - name: install spectacle
-  shell: brew cask install spectacle
+  shell: brew install spectacle --cask
   when: not file.stat.exists
 
 # iTerm2
@@ -98,7 +112,17 @@
   register: file
 
 - name: install spectacle
-  shell: brew cask install iterm2
+  shell: brew install iterm2 --cask
+  when: not file.stat.exists
+
+# Slack
+- name: check if slack exist
+  stat:
+    path: /Applications/Slack.app
+  register: file
+
+- name: install slack
+  shell: brew install slack --cask
   when: not file.stat.exists
 
 # mkdir ~/.zsh
